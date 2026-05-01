@@ -1,25 +1,22 @@
 import express from "express";
 import cors from "cors";
 
+import authRoutes from "./routes/auth.js";   // ✅ ADD THIS
+import taskRoutes from "./routes/task.js";   // (if using)
+import projectRoutes from "./routes/project.js"; // (if using)
+
 const app = express();
 
-// ✅ CORS here (VERY IMPORTANT POSITION)
-app.use(
-  cors({
-    origin: "https://task-manager-phi-gules-93.vercel.app",
-    credentials: true,
-  })
-);
-
+app.use(cors());
 app.use(express.json());
 
 // routes
+app.use("/auth", authRoutes);
+app.use("/tasks", taskRoutes);
+app.use("/projects", projectRoutes);
+
 app.get("/", (req, res) => {
   res.send("Server is LIVE 🚀");
-});
-
-app.get("/health", (req, res) => {
-  res.json({ status: "ok" });
 });
 
 const PORT = process.env.PORT || 5000;
