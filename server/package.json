@@ -2,7 +2,9 @@
   "name": "server",
   "type": "module",
   "scripts": {
-    "dev": "nodemon index.js"
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "postinstall": "prisma generate"
   },
   "dependencies": {
     "@prisma/client": "^5.22.0",

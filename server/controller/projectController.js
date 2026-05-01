@@ -35,3 +35,20 @@ export const addMember = async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 };
+export const getProjectMembers = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const members = await prisma.projectMember.findMany({
+      where: { projectId: id },
+      include: {
+        user: true, // 👈 get user info
+      },
+    });
+
+    // return only users
+    res.json(members.map((m) => m.user));
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
