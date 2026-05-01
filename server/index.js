@@ -3,17 +3,23 @@ import cors from "cors";
 
 const app = express();
 
-app.use(cors());
+// ✅ CORS here (VERY IMPORTANT POSITION)
+app.use(
+  cors({
+    origin: "https://task-manager-phi-gules-93.vercel.app",
+    credentials: true,
+  })
+);
+
 app.use(express.json());
 
-// ✅ MUST HAVE ROOT ROUTE
+// routes
 app.get("/", (req, res) => {
-  res.status(200).send("Server is LIVE 🚀");
+  res.send("Server is LIVE 🚀");
 });
 
-// ✅ health check route (Railway friendly)
 app.get("/health", (req, res) => {
-  res.status(200).json({ status: "ok" });
+  res.json({ status: "ok" });
 });
 
 const PORT = process.env.PORT || 5000;
